@@ -43,6 +43,8 @@ jobs:
 
     steps:
       # Step 1: Checkout Code
+      echo "DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}"
+      echo "DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}"
       - name: Checkout Repository
         uses: actions/checkout@v3
 
