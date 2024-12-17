@@ -3,7 +3,7 @@ name: CI/CD Pipeline for FastAPI
 on:
   push:
     branches:
-      - main # Trigger pipeline on pushes to the main branch
+      - staging # Trigger pipeline on pushes to the main branch
 
 jobs:
   # Job 1: CI - Build and Test
