@@ -58,7 +58,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/fastapi-project:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{env.IMAGE}}
 
   # Job 3: Deploy to Environment
   deploy:
@@ -68,8 +68,17 @@ jobs:
 
     steps:
       # Step 1: Pull and Run the Docker Image
-      - name: Run Container
+      - name: Enable the Billing API
         run: |
-          echo "Deploying container..."
-          docker run -d -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/fastapi-project:latest
-          echo "Container is running at http://localhost:8000"
+          gcloud services enable cloudbilling.googleapis.com --project=${{secrets.GCP_PROJECT_ID}}
+
+      - name: Deploy to GCP Run - Staging environment
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploying to Staging environment"
+          gcloud run deploy ${{vars.GCR_STAGING_PROJECT_NAME}} \
+          --region ${{vars.GCR_REGION}} \
+          --image ${{env.IMAGE}} \
+          --platform "managed" \
+          --allow-unauthenticated \
+          --tag staging \
