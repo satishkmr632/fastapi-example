@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Debug Secret Variable
-        run: echo "MY_SECRET: ${{ secrets.DOCKER_USERNAME }}"
+        run: echo "MY_SECRET"
 
       - name: Checkout Repository
         uses: actions/checkout@v3
