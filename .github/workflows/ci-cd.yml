@@ -58,7 +58,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{env.IMAGE}}
+          tags: ${{ secrets.DOCKER_USERNAME }}/fastapi-project:latest
 
   # Job 3: Deploy to Environment
   deploy:
@@ -78,7 +78,7 @@ jobs:
           echo "Deploying to Staging environment"
           gcloud run deploy ${{vars.GCR_STAGING_PROJECT_NAME}} \
           --region ${{vars.GCR_REGION}} \
-          --image ${{env.IMAGE}} \
+          --image fastapi-project:latest \
           --platform "managed" \
           --allow-unauthenticated \
           --tag staging \
